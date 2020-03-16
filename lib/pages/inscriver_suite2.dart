@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:covid19/models/user.dart';
+import 'package:covid19/pages/pre_home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:covid19/pages/home_page.dart';
@@ -101,6 +102,11 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
                                 if(selectedGender!=null&&_emergencyphone!=""){
                                   // put all the infos into database;
                                   signIn(widget.username, widget.password, widget.phone, widget.prenom, widget.nom, widget.age, selectedGender, _emergencyphone);
+                                   Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pre_home()),
+                                  );
                                 }
 
                               },

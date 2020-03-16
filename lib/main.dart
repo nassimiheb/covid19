@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:covid19/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'pages/pre_home.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -121,8 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             setState(() {
                               _isLoading = true;
                               
+
                             });
                             signIn(_username,_password);
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Pre_home()),
+                                  );
                           },
                           color: Color(0xFF00A79B),
                           elevation: 3,
