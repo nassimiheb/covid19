@@ -1,5 +1,11 @@
 
+import 'dart:convert';
+
+import 'package:covid19/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:covid19/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Inscrivez2_page extends StatefulWidget {
   final String username;
@@ -22,10 +28,11 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
   String _emergencyphone="";
    Item selectedGender;
   List<Item> users = <Item>[
-    const Item('homme',),
-    const Item('femme',),
+    const Item('Homme',),
+    const Item('Femme',),
    
   ];
+  bool _isLoading = false;
   
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       AppBar(
-                        title: new Text('Back'),
+                        title: new Text('Retour'),
                         backgroundColor: Colors.transparent,
                         elevation: 0.0,
                       ),
@@ -63,7 +70,7 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
               backgroundColor: Colors.transparent,
               body: new Container(
                 color: Colors.white,
-                child: new Center(
+                child:  _isLoading ? Center(child: CircularProgressIndicator()) : Center(
                     child: Column(
                   children: <Widget>[
                     Container(
@@ -91,7 +98,10 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
                                   borderRadius: new BorderRadius.circular(6.0),
                                   side: BorderSide(color: Color(0xFF00A79B))),
                               onPressed: () {
-                                if(selectedGender!=null&&_emergencyphone!=""){}
+                                if(selectedGender!=null&&_emergencyphone!=""){
+                                  // put all the infos into database;
+                                  signIn(widget.username, widget.password, widget.phone, widget.prenom, widget.nom, widget.age, selectedGender, _emergencyphone);
+                                }
 
                               },
                               color: Color(0xFF00A79B),
@@ -113,6 +123,25 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
     );
   }
 
+  signIn(String username, String password, String phoneNumber, String firstName, String familyName, int age, Item gender, String secondaryNum) async {
+    User user = new User(userName: username, password: password, phoneNumber: phoneNumber, firstName: firstName, familyName: familyName, age: age, gender: gender, secondaryNum: secondaryNum);
+    var jsonData; 
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var response = await http.post("url", body: user);
+    if (response.statusCode == 200) {
+      jsonData = json.decode(response.body);
+      setState(() {
+        _isLoading = false;
+        sharedPreferences.setString("token", jsonData['token']);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (Route<dynamic> route) => false);
+
+      });
+    }
+    else {
+      print(response.body);
+    }
+  }
+
   Widget showNameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
@@ -124,7 +153,7 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
        Container(
          padding: EdgeInsets.all(12), 
          child: DropdownButton<Item>(
-            hint:  Text("Select item"),
+            hint:  Text("Sexe"),
             value: selectedGender,
             onChanged: (Item Value) {
               setState(() {
@@ -164,12 +193,12 @@ class _Inscrivez2_pageState extends State<Inscrivez2_page> {
         obscureText: false,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Numero d''urgence',
+            hintText: "Numéro d'urgence",
             icon: new Icon(
               Icons.phone,
               color: Colors.black87,
             )),
-        validator: (value) => value.isEmpty ? 'Phone can\'t be empty' : null,
+        validator: (value) => value.isEmpty ? 'Veuillez saisir un numéro' : null,
       ),
     );
   }

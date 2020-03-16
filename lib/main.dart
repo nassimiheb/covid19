@@ -1,5 +1,10 @@
+import 'dart:convert';
 import 'package:covid19/pages/inscrivez.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:covid19/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -7,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -14,7 +20,11 @@ class MyApp extends StatelessWidget {
       home:MyHomePage()
     );
   }
+
+  
 }
+
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, }) : super(key: key);
@@ -28,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _username="";
   String _password="";
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       resizeToAvoidBottomPadding: true,
       body: 
         
-        SingleChildScrollView(child: Column(
+        SingleChildScrollView(child: _isLoading ? Center(child: CircularProgressIndicator()) : Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Stack(
@@ -107,10 +118,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius: new BorderRadius.circular(6.0),
                               side: BorderSide(color: Color(0xFF00A79B))),
                           onPressed: () {
-                             if(_password!=""&&_username!=""){
-                               
-                             }
-
+                            setState(() {
+                              _isLoading = true;
+                              
+                            });
+                            signIn(_username,_password);
                           },
                           color: Color(0xFF00A79B),
                           elevation: 3,
@@ -155,6 +167,29 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  signIn(String username, String password) async {
+    Map data = {
+      'username': username,
+      'password': password,
+    }; 
+  //post request 
+    var jsonData; 
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var response = await http.post("url", body: data);
+    if (response.statusCode == 200) {
+      jsonData = json.decode(response.body);
+      setState(() {
+        _isLoading = false;
+        sharedPreferences.setString("token", jsonData['token']);
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginPage()), (Route<dynamic> route) => false);
+
+      });
+    }
+    else {
+      print(response.body);
+    }
+  }
+
   Widget showUsernameInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
@@ -193,3 +228,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+

@@ -1,5 +1,6 @@
 import 'package:covid19/pages/inscrivez_suite1.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class Inscrivez_page extends StatefulWidget {
   @override
@@ -31,7 +32,7 @@ class _Inscrivez_pageState extends State<Inscrivez_page> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       AppBar(
-                        title: new Text('Back'),
+                        title: new Text('Retour'),
                         backgroundColor: Colors.transparent,
                         elevation: 0.0,
                       ),
@@ -120,7 +121,7 @@ class _Inscrivez_pageState extends State<Inscrivez_page> {
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Username',
+            hintText: "Nom d'utilisateur",
             icon: new Icon(
               Icons.person,
               color: Colors.black87,
@@ -141,7 +142,7 @@ class _Inscrivez_pageState extends State<Inscrivez_page> {
         maxLines: 1,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Numero de telephone',
+            hintText: 'Numéro de telephone',
             icon: new Icon(
               Icons.phone,
               color: Colors.black87,
