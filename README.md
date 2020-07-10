@@ -22,10 +22,13 @@ $ flutter run
 (may take time in first run)
 
 ## Preview
-### Landing_Page 
-<img src="assets/person.png"  align="center" height="400" />
+
 
 ### Main_Page
+<img src="assets/main.png"  align="center" height="400" />
+### Info_pages 
+<img src="assets/person.png"  align="center" height="400" />
+<img src="assets/info.png"  align="center" height="400" />
 
 ## Features
 
