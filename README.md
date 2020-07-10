@@ -1,16 +1,44 @@
-# covid19
+<img src="assets/corona.png"  align="right" height="40" />
 
-A new Flutter project.
+# Covid 19 Application 
+> A Flutter project,
+> is a mobile application offering the user the possibility to enter his personal information and his symptoms, this information is consulted by a doctor who will determine the seriousness of his situation.
+## Installation
 
-## Getting Started
+- Not yet
 
-This project is a starting point for a Flutter application.
+## Testing
+Clone the source locally.
+On a working flutter environment:
+  
+```sh
+$ flutter packages get
+```
+then :
+  
+```sh
+$ flutter run 
+```
+(may take time in first run)
 
-A few resources to get you started if this is your first Flutter project:
+## Preview
+### Landing_Page 
+<img src="assets/person.png"  align="center" height="400" />
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Main_Page
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+
+- [x] Taking personal information
+- [x] Main page
+- [ ] Doctor Dashboard
+
+## Authors
+- Iheb Nassim Aouadj
+- SafiEddine Rihani
+
+## Contributions
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
