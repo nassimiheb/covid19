@@ -28,7 +28,11 @@ $ flutter run
 <img src="assets/main.png"  align="center" height="400" />
 
 ### Info_pages 
-![info](assets/person.png "personnel info") ![info](assets/info.png "information")
+<p float="left">
+  <img src="assets/person.png" width="100" />
+  <img src="assets/info.png" width="100" /> 
+  
+</p>
 
 ## Features
 
