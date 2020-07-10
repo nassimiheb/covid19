@@ -26,9 +26,10 @@ $ flutter run
 
 ### Main_Page
 <img src="assets/main.png"  align="center" height="400" />
+
 ### Info_pages 
-<img src="assets/person.png"  align="center" height="400" />
-<img src="assets/info.png"  align="center" height="400" />
+<img src="assets/person.png"  align="left" height="400" />
+<img src="assets/info.png"  align="right" height="400" />
 
 ## Features
 
