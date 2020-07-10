@@ -29,8 +29,8 @@ $ flutter run
 
 ### Info_pages 
 <p float="left">
-  <img src="assets/person.png" width="100" />
-  <img src="assets/info.png" width="100" /> 
+  <img src="assets/person.png" width="300" />
+  <img src="assets/info.png" width="300" /> 
   
 </p>
 
